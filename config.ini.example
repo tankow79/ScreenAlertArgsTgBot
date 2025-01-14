@@ -1,0 +1,4 @@
+[telegram]
+bot_token = <Ваш_Telegram_токен>
+chat_id = <Ідентифікатор_чату>
+computer_name = My_PC

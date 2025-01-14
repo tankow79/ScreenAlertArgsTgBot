@@ -1,0 +1,15 @@
+altgraph==0.17.4
+certifi==2024.12.14
+charset-normalizer==3.4.1
+configparser==7.1.0
+idna==3.10
+packaging==24.2
+pefile==2024.8.26
+pillow==11.1.0
+pyinstaller==6.11.1
+pyinstaller-hooks-contrib==2024.11
+pyTelegramBotAPI==4.26.0
+pywin32-ctypes==0.2.3
+requests==2.32.3
+urllib3==2.3.0
+pip==24.3.1
