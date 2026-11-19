@@ -1,182 +1,90 @@
 # ScreenAlertArgsTgBot
-Бот для роботи зі скріншотами та повідомленнями за аргументами запуску
 
-# Telegram Screenshot & Message Sender Bot
+A small Windows tool that sends a message or a screenshot to Telegram from the command line.
 
-**ScreenAlertArgsTgBot** — це бот, який дозволяє:
-- Відправляти текстові повідомлення до Telegram.
-- Робити знімки екрану й надсилати їх до чату Telegram.
-- Для керування приймає команди через аргументи командного рядка.
+Pass text as arguments and the bot delivers it to your chat. Add the word `screen` or `png` and it attaches a screenshot of your display. Useful for alerts from scripts, scheduled tasks and remote machines.
 
-## Основні можливості
-1. **Відправка текстових повідомлень**: Введіть текст у параметри запуску, і бот відправить його в Telegram.
-2. **Відправка скріншотів**: Додайте ключові слова ("screen" або "png") у текст, щоб бот зробив знімок екрану та надіслав його.
-3. **Налаштування через файл конфігурації**: Параметри бота зберігаються у файлі `config.ini`.
+## Features
 
----
+- Sends text messages to a Telegram chat.
+- Captures the screen and sends it as an image.
+- Configured through a simple `config.ini` file.
+- Can be compiled into a single `.exe` with PyInstaller.
 
-## Використані технології
+## Tech
 
-- **Python 3.11**: Проект розроблено за допомогою сучасної версії Python 3.11, яка забезпечує високу продуктивність та підтримку нових функцій.
-- **Основні бібліотеки:**
-  - **pillow**: Обробка та створення зображень, зокрема захоплення скріншотів.
-  - **pyTelegramBotAPI**: Для інтеграції з API Telegram, що дозволяє надсилати повідомлення та файли.
-  - **configparser**: Для зручної роботи з конфігураційними файлами в форматі `.ini`.
-  - **os** і **sys**: Для роботи з файловою системою й обробки аргументів командного рядка.
+Python 3.11 · `pyTelegramBotAPI` · `Pillow` · `configparser` · PyInstaller
 
----
+## Quick start
 
-## Інструкція з використання `ScreenAlertArgsTgBot.exe` файлу
+1. Clone the repository and install dependencies:
 
-### Запуск
-1. Завантажте `ScreenAlertArgsTgBot.exe` файл із [релізів](#).
-2. Створіть файл `config.ini` у папці з ботом або завантажте готовий файл із репозиторію [config.ini.example](config.ini.example) і перейменуйте його в `config.ini`. Ось приклад вмісту файлу:
-   ```ini
-   [telegram]
-   bot_token = <Ваш_Telegram_токен>
-   chat_id = <Ідентифікатор_чату>
-   computer_name = My_PC
-   ```
-   - **bot_token**: Токен вашого Telegram бота.
-   - **chat_id**: Ідентифікатор вашого Telegram чату.
-   - **computer_name**: Назва комп'ютера (буде використовуватися в підписах повідомлень).
-
-   **ВАЖЛИВО**: Замість `<Ваш_Telegram_токен>` і `<Ідентифікатор_чату>` вкажіть реальні значення.
-
-3. Запустіть `ScreenAlertArgsTgBot.exe` через командний рядок:
    ```bash
-   ScreenAlertArgsTgBot.exe <ВАШЕ ПОВІДОМЛЕННЯ>
-   ```
-   - Наприклад:
-     ```bash
-     ScreenAlertArgsTgBot.exe Hello, world!
-     ```
-   - Для відправки скріншота:
-     ```bash
-     ScreenAlertArgsTgBot.exe screen Ось скріншот мого екрану
-     ```
-
----
-
-## Інструкція для роботи з `main.py`
-
-1. Клонуйте репозиторій:
-   ```bash
-   git clone https://github.com/yourusername/projectname.git
-   cd projectname
-   ```
-2. Встановіть необхідні залежності з файлу `requirements.txt`:
-   ```bash
+   git clone https://github.com/tankow79/ScreenAlertArgsTgBot.git
+   cd ScreenAlertArgsTgBot
    pip install -r requirements.txt
    ```
-3. Створіть файл `config.ini` або завантажте приклад із репозиторію [config.ini.example](config.ini.example), перейменуйте його в `config.ini`, та змініть змінні на власні:
+
+2. Copy `config.ini.example` to `config.ini` and fill in your values:
+
    ```ini
    [telegram]
-   bot_token = <Ваш_Telegram_токен>
-   chat_id = <Ідентифікатор_чату>
+   bot_token = <your_telegram_bot_token>
+   chat_id = <your_chat_id>
    computer_name = My_PC
    ```
-4. Запустіть скрипт через командний рядок:
+
+   | Key | Meaning |
+   |---|---|
+   | `bot_token` | Token of your Telegram bot (from @BotFather) |
+   | `chat_id` | ID of the chat that receives messages |
+   | `computer_name` | Name used in message captions |
+
+3. Run it:
+
    ```bash
-   python main.py <ВАШЕ ПОВІДОМЛЕННЯ>
-   ```
-   - Наприклад, для відправки текстового повідомлення:
-     ```bash
-     python main.py Привіт, Telegram!
-     ```
-   - Або для відправки скріншота:
-     ```bash
-     python main.py screen Мій скріншот
-     ```
-
----
-
-## Як скомпілювати `.py` у `.exe`
-
-Для компіляції вашого Python файлу в `.exe` доступні два варіанти: із вшиванням файлу `config.ini` у виконуваний файл або з винесенням `config.ini` як окремого файлу.
-
-### 1. Компіляція з вшиванням файлу `config.ini` в `main.py` (користувач не матиме доступу для редагування після компіляції)
-
-1. Встановіть бібліотеку `pyinstaller`:
-   ```bash
-   pip install pyinstaller
+   python main.py Hello, Telegram!
+   python main.py screen Here is my screen
    ```
 
-2. Запустіть команду компіляції:
-   ```bash
-   pyinstaller -w -F --onefile --hidden-import=pyTelegramBotAPI main.py
-   ```
-   Ось що означає кожен параметр:
-   - **`-w`**: Прибирає консольне вікно під час запуску `.exe` файлу. Використовується для тихих програм, які не потребують виводу в консоль.
-   - **`-F`** або **`--onefile`**: Упаковує всі залежності разом із файлом Python у один `.exe` файл.
-   - **`--hidden-import=pyTelegramBotAPI`**: Включає бібліотеку `pyTelegramBotAPI`, якщо вона була імпортована динамічно.
+## Build an .exe
 
-   У результаті ви отримаєте `main.exe` файл, який містить код програми та всі необхідні залежності. Конфігурація `config.ini` буде "захована", тобто користувач не матиме доступу для її редагування.
-
----
-
-### 2. Компіляція, де файл `config.ini` виноситься як окремий (користувач матиме доступ до редагування)
-
-Якщо необхідно надати користувачеві можливість редагування файлу `config.ini` після компіляції:
-
-1. Встановіть бібліотеку `pyinstaller`:
-   ```bash
-   pip install pyinstaller
-   ```
-
-2. Запустіть команду компіляції:
-   ```bash
-   pyinstaller -w -F --onefile --hidden-import=pyTelegramBotAPI --add-data "config.ini:." main.py
-   ```
-
-   Параметри в команді:
-   - **`-w`**: Прибирає консольне вікно під час запуску `.exe` файлу.
-   - **`-F`** або **`--onefile`**: Упаковує основний скрипт і його залежності у один `.exe` файл.
-   - **`--hidden-import=pyTelegramBotAPI`**: Додає імпорт бібліотеки `pyTelegramBotAPI`, який міг би бути пропущений через динамічний імпорт у програмі.
-   - **`--add-data "config.ini:."`**: Додає файл `config.ini` у ту ж саму директорію, де буде розташовано `.exe` файл:
-      - **`"config.ini:."`**: У форматі `SOURCE:DEST`, де:
-         - `config.ini` — файл конфігурації.
-         - `.` — директорія, в яку файл буде виведено.
-
----
-
-### Після компіляції
-
-- Скомпільований `.exe` файл буде розташовано в папці `dist/` (файл `config.ini` в деяких випадках потрібно перенести в ручну в `dist/`) :
-   ```plaintext
-   dist/
-   ├── main.exe           # Ваш виконуваний файл
-   └── config.ini         # Файл конфігурації (за наявності)
-   ```
-
-- Ви можете перейменувати `main.exe` у будь-яке інше ім'я, наприклад, `ScreenAlertArgsTgBot.exe`.
-
----
-
-Ці два підходи забезпечують гнучкість залежно від ваших вимог — або повністю "заховати" конфігурацію, або надати користувачеві можливість її змінювати.
-
-4. Перейменуйте `main.exe` в потрібну назву, наприклад, `ScreenAlertArgsTgBot.exe`, та перенесіть у бажану директорію.
-
-5. Тепер ви можете запускати `ScreenAlertArgsTgBot.exe` так само, як інші виконувані файли:
-   ```bash
-   bot.exe <ВАШЕ ПОВІДОМЛЕННЯ>
-   ```
-
----
-
-## Структура проекту
-
-```plaintext
-ScreenAlertArgsTgBot/
-│
-├── main.py              # Основний код проекту
-├── config.ini           # Файл конфігурації (створюється користувачем)
-├── README.md            # Інструкції до проекту
-│
-└── requirements.txt     # Залежності для роботи бота
+```bash
+pip install pyinstaller
 ```
 
----
+**Config next to the exe** (editable after build):
 
-## Автор
-Створено з ❤️ для полегшення автоматизації роботи з Telegram. Щоб повідомити про помилки чи запропонувати покращення, створіть [Issue](#).
+```bash
+pyinstaller -w -F --hidden-import=pyTelegramBotAPI main.py
+```
+
+Copy `config.ini` into the `dist/` folder next to the exe.
+
+**Config embedded in the exe** (not editable after build):
+
+```bash
+pyinstaller -w -F --hidden-import=pyTelegramBotAPI --add-data "config.ini;." main.py
+```
+
+Options: `-w` hides the console window, `-F` packs everything into one file, `--hidden-import` includes the Telegram library. On Linux and macOS use `:` instead of `;` in `--add-data`.
+
+The result is `dist/main.exe`. Rename it if you like, for example to `ScreenAlertArgsTgBot.exe`, then run:
+
+```bash
+ScreenAlertArgsTgBot.exe screen Here is my screen
+```
+
+## Security
+
+Keep your real bot token private. Do not publish a `config.ini` that contains it, and if a token ever leaks, revoke it in @BotFather.
+
+## Project structure
+
+```
+.
+├─ main.py
+├─ config.ini.example
+├─ requirements.txt
+└─ README.md
+```
